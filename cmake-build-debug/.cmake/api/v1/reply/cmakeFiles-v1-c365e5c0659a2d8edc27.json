@@ -421,7 +421,7 @@
 			"path" : "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.27/Modules/FindPackageMessage.cmake"
 		},
 		{
-			"path" : "vendor/SDL/.git/HEAD"
+			"path" : ".git/HEAD"
 		},
 		{
 			"path" : "vendor/SDL/cmake/GetGitRevisionDescription.cmake.in"
@@ -431,7 +431,7 @@
 			"path" : "cmake-build-debug/vendor/SDL/CMakeFiles/git-data/grabRef.cmake"
 		},
 		{
-			"path" : "vendor/SDL/.git/refs/heads/main"
+			"path" : ".git/refs/heads/master"
 		},
 		{
 			"path" : "vendor/SDL/include/build_config/SDL_revision.h.cmake"

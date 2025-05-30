@@ -31,8 +31,46 @@ typedef struct configuration {
 SDL_Window * Chip_8Window;
 SDL_Renderer * Chip_8Renderer;
 
-SDL_AudioStream* audioStream = nullptr;
-int sampleRate = 44100;
+
+// Config
+const int sampleRate = 48000;
+const float beepFrequency = 440.0f;
+const int bufferSamples = 1024;
+static SDL_AudioStream* audioStream = nullptr;
+static std::vector<int16_t> beepBuffer;
+
+void init_audio() {
+    SDL_AudioSpec spec{};
+    spec.freq = sampleRate;
+    spec.format = SDL_AUDIO_S16;
+    spec.channels = 1;
+
+    audioStream = SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, &spec, nullptr, nullptr);
+    if (!audioStream) {
+        SDL_Log("AudioStream error: %s", SDL_GetError());
+        return;
+    }
+
+    SDL_ResumeAudioStreamDevice(audioStream);
+
+    // Generar onda senoidal para beep
+    beepBuffer.resize(bufferSamples);
+    float phase = 1.0f;
+    float increment = 2.0f * M_PI * beepFrequency / sampleRate;
+
+    for (int i = 0; i < bufferSamples; ++i) {
+        beepBuffer[i] = static_cast<int16_t>(sinf(phase) * 2000);
+        phase += increment;
+    }
+}
+
+// Función para reproducir el beep si sound_timer > 0
+void play_chip8_beep() {
+    if (audioStream) {
+        SDL_PutAudioStreamData(audioStream, beepBuffer.data(), beepBuffer.size() * sizeof(int16_t));
+
+    }
+}
 
 
 //Configuration
@@ -54,7 +92,7 @@ int main() {
 
 //-------------------------------------------------------
     //Seting Up SDL, Window and renderer
-    if (!SDL_Init(SDL_INIT_VIDEO)) {
+    if (!SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO)) {
         SDL_Log("SDL failed to initialize");
         return -2;
     }
@@ -89,14 +127,8 @@ int main() {
 
 //--------SOUND--------------------------------
 
-SDL_AudioSpec audioSpec{
-    .format = SDL_AUDIO_S16LE,
-    .channels = 1,
-    .freq = 4400
-};
 
-SDL_AudioStream *AudioStream = SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK,&audioSpec, nullptr, nullptr);
-    SDL_ResumeAudioStreamDevice(audioStream);
+init_audio();
 //----------------------------------------------
     // Setup ImGui context
     IMGUI_CHECKVERSION();
@@ -257,7 +289,7 @@ SDL_AudioStream *AudioStream = SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAUL
                             _chip8.delay_timer--;  // Decrementa delay y sound timer
                         };
                         if (_chip8.sound_timer > 0) {
-
+                            play_chip8_beep();
                             _chip8.sound_timer--;
                         }
                         lastExecutionTime = now;

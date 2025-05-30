@@ -1,32 +1,13 @@
 "C:\Program Files\JetBrains\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe" -G Ninja -S E:\VSCode\Chip-8 -B E:\VSCode\Chip-8\cmake-build-debug
 -- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
 -- Could NOT find LibUSB (missing: LibUSB_LIBRARY LibUSB_INCLUDE_PATH) (found version "LibUSB_VERSION-NOTFOUND")
-CMake Error: File E:/VSCode/Chip-8/.git/packed-refs does not exist.
-CMake Error at cmake-build-debug/vendor/SDL/CMakeFiles/git-data/grabRef.cmake:29 (configure_file):
-  configure_file Problem configuring file
-Call Stack (most recent call first):
-  vendor/SDL/cmake/GetGitRevisionDescription.cmake:165 (include)
-  vendor/SDL/cmake/GetGitRevisionDescription.cmake:179 (get_git_head_revision)
-  vendor/SDL/CMakeLists.txt:3254 (git_describe)
-
-
-CMake Error at cmake-build-debug/vendor/SDL/CMakeFiles/git-data/grabRef.cmake:30 (file):
-  file failed to open for reading (No such file or directory):
-
-    E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/CMakeFiles/git-data/packed-refs
-Call Stack (most recent call first):
-  vendor/SDL/cmake/GetGitRevisionDescription.cmake:165 (include)
-  vendor/SDL/cmake/GetGitRevisionDescription.cmake:179 (get_git_head_revision)
-  vendor/SDL/CMakeLists.txt:3254 (git_describe)
-
-
 -- 
 -- SDL3 was configured with the following options:
 -- 
 -- Platform: Windows-10.0.26100
 -- 64-bit:   TRUE
 -- Compiler: C:/Program Files/JetBrains/CLion 2023.2.2/bin/mingw/bin/gcc.exe
--- Revision: SDL3-3.3.0--128-NOTFOUND
+-- Revision: SDL3-3.3.0-333dad6
 -- Vendor:   
 -- 
 -- Subsystems:
@@ -144,4 +125,6 @@ Call Stack (most recent call first):
 --  Build Shared Library: ON
 --  Build Static Library: OFF
 -- 
--- Configuring incomplete, errors occurred!
+-- Configuring done (0.4s)
+-- Generating done (0.1s)
+-- Build files have been written to: E:/VSCode/Chip-8/cmake-build-debug
