@@ -1,4 +1,6 @@
 CHIP-8 EMULATOR 
+
+
 My first ever project :
 - Bad Audio Implementation + Some Bugs Related
 - Some roms works perfectly, others, no
@@ -6,4 +8,8 @@ My first ever project :
 Quirks Implemented:
 - SHIFTING -> Using Vy
 - MEMORY -> Increasing Imdex
-- JUMP 
+- JUMP
+
+Using:
+- SDL3, for rendering gui and emulator display
+- ImGui, for debuggin ui
