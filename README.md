@@ -2,7 +2,7 @@ CHIP-8 EMULATOR
 
 
 My first ever project :
-- Bad Audio Implementation + Some Bugs Related
+- Bad Audio Implementation + Some Bugs
 - Some roms works perfectly, others, no
 
 Quirks Implemented:
