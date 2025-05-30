@@ -1,2 +1,2 @@
-CHIP-8 EMULATOR
+CHIP-8 EMULATOR \n
 My first ever project 
