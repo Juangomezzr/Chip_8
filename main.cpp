@@ -33,13 +33,15 @@ SDL_Renderer * Chip_8Renderer;
 
 
 // Config
-const int sampleRate = 48000;
+const int sampleRate = 48000 * 2;
 const float beepFrequency = 440.0f;
-const int bufferSamples = 1024;
+const int bufferSamples = 1024 ;
 static SDL_AudioStream* audioStream = nullptr;
 static std::vector<int16_t> beepBuffer;
 
+
 void init_audio() {
+    //SDL audio things
     SDL_AudioSpec spec{};
     spec.freq = sampleRate;
     spec.format = SDL_AUDIO_S16;
@@ -52,6 +54,8 @@ void init_audio() {
     }
 
     SDL_ResumeAudioStreamDevice(audioStream);
+    //---------------------------------------
+
 
     // Generar onda senoidal para beep
     beepBuffer.resize(bufferSamples);
@@ -59,16 +63,20 @@ void init_audio() {
     float increment = 2.0f * M_PI * beepFrequency / sampleRate;
 
     for (int i = 0; i < bufferSamples; ++i) {
-        beepBuffer[i] = static_cast<int16_t>(sinf(phase) * 2000);
+        float t = static_cast<float>(i) / bufferSamples; // Progreso entre 0.0 y 1.0
+        float amplitude = sinf(M_PI * t); // Fade in/out suave (seno de media onda)
+        float square = (sinf(phase) >= 0.0f) ? 1.0f : -1.0f;
+
+        beepBuffer[i] = static_cast<int16_t>(square * amplitude * 1000);
         phase += increment;
     }
 }
 
 // Función para reproducir el beep si sound_timer > 0
 void play_chip8_beep() {
-    if (audioStream) {
+    if ( audioStream) {
         SDL_PutAudioStreamData(audioStream, beepBuffer.data(), beepBuffer.size() * sizeof(int16_t));
-
+        SDL_FlushAudioStream(audioStream);
     }
 }
 
@@ -289,6 +297,8 @@ init_audio();
                             _chip8.delay_timer--;  // Decrementa delay y sound timer
                         };
                         if (_chip8.sound_timer > 0) {
+
+
                             play_chip8_beep();
                             _chip8.sound_timer--;
                         }

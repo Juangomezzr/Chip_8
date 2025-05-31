@@ -386,12 +386,14 @@ void Chip8::executeInst(){
 
 
 
+
                     }else if(display[(pos_y*64) + pos_x + pixel ]  == 1   && (sprite >> (7-pixel) & 1) == 0){
 
                         display[(pos_y*64) + pos_x + pixel] = 1;
 
                     }else if(display[(pos_y*64) + pos_x + pixel ]  == 0   && (sprite >> (7-pixel) & 1) == 0){
                         display[(pos_y*64) + pos_x + pixel] = 0;
+
 
 
 
@@ -408,9 +410,7 @@ void Chip8::executeInst(){
                         if (presed_key == V[x]) {
                             PC += 2;
                         }
-
                     }
-
 
                 } else if (NN == 0xa1) {
                     if (presed_key != V[x]) {
