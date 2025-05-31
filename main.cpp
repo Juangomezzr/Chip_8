@@ -33,7 +33,7 @@ SDL_Renderer * Chip_8Renderer;
 
 
 // Config
-const int sampleRate = 48000 * 2;
+const int sampleRate = 48000 ;
 const float beepFrequency = 440.0f;
 const int bufferSamples = 1024 ;
 static SDL_AudioStream* audioStream = nullptr;
@@ -65,9 +65,8 @@ void init_audio() {
     for (int i = 0; i < bufferSamples; ++i) {
         float t = static_cast<float>(i) / bufferSamples; // Progreso entre 0.0 y 1.0
         float amplitude = sinf(M_PI * t); // Fade in/out suave (seno de media onda)
-        float square = (sinf(phase) >= 0.0f) ? 1.0f : -1.0f;
-
-        beepBuffer[i] = static_cast<int16_t>(square * amplitude * 1000);
+        float sample = sinf(phase) * amplitude * 3000;
+        beepBuffer[i] = static_cast<int16_t>(sample);
         phase += increment;
     }
 }
